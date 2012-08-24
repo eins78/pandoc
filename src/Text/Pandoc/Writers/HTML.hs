@@ -231,7 +231,7 @@ tableOfContents opts sects = do
   let tocList = catMaybes contents
   return $ if null tocList
               then Nothing
-              else Just $ unordList opts tocList
+              else Just $ ordList opts tocList
 
 -- | Convert section number to string
 showSecNum :: [Int] -> String
@@ -250,7 +250,7 @@ elementToListItem opts (Sec _ num id' headerText subsecs) = do
   subHeads <- mapM (elementToListItem opts) subsecs >>= return . catMaybes
   let subList = if null subHeads
                    then mempty
-                   else unordList opts subHeads
+                   else ordList opts subHeads
   return $ Just $ (H.a ! A.href (toValue $ "#" ++ writerIdentifierPrefix opts ++ id')
                        $ toHtml txt) >> subList
 
